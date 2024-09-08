@@ -1,0 +1,40 @@
+.room-selector {
+    position: relative;
+    margin: 2rem 0;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: start;
+    align-items: center;
+}
+.room-selector .room {
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    transition: all 0.3s ease;
+}
+.room-selector .room:hover {
+    transform: scale(1.05);
+}
+.room-selector .room:active {
+    transform: scale(0.95);
+}
+.room-selector .room.active {
+    pointer-events: none;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+}
+.room-selector .room.disabled {
+    pointer-events: none;
+    background-color: gray;
+    border: 2px solid gray;
+    color: white;
+    font-weight: bold;
+}

@@ -1,0 +1,10 @@
+<script type="text/javascript" src="<?= base_url('js/jquery-3.7.1.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('js/evo-calendar.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('js/utils/puller.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('js/materialize.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('js/sweetalert2.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('js/materialize.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('js/lightbox.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('js/jquery.waypoints.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('js/jquery.counterup.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('js/main.js') ?>"></script>
