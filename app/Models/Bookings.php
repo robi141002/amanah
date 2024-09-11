@@ -13,6 +13,7 @@ class Bookings extends Model
     protected $table = 'bookings';
     protected $fillable = [
         'code',
+        'pasien_id',
         'room_id',
         'date_in',
         'date_out',
@@ -26,6 +27,7 @@ class Bookings extends Model
         'pas_photo',
         'sktm',
         'status',
+        'keterangan',
     ];
 
     public function kamar(): HasOne
@@ -39,7 +41,7 @@ class Bookings extends Model
     protected static function booted(): void
     {
         static::created(function (Bookings $booking) {
-            $booking->code = "RSA" . range("A", "Z")[$booking->room_id - 1] . $booking->created_at->format('Ymd') . sprintf("%04d", $booking->id);
+            $booking->code = "RSA" . range("A", "Z")[$booking->room_id - 1] . $booking->created_at->format('Y') . sprintf("%04d", $booking->id);
             $booking->save();
         });
     }

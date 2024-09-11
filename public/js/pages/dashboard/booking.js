@@ -54,7 +54,7 @@ const table = {
             case 1:
               return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}</div>`;
             default:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}${btnConfirm}</div>`;
+              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}${btnConfirm}<a href="#!" class="btn-control btn-danger orange darken-2" data-title="Tolak" data-id="${data}"><i class="material-icons">cancel</i></a></div>`;
           }
         },
       },

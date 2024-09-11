@@ -38,6 +38,8 @@ $routes->group('panel', static function (RouteCollection $routes) {
     $routes->get('kamar', [Dashboard::class, 'kamar']);
     $routes->get('booking', [Dashboard::class, 'booking']);
     $routes->get('pasien', [Dashboard::class, 'pasien']);
+    $routes->get('master', [Dashboard::class, 'master']);
+    $routes->get('laporan', [Dashboard::class, 'laporan']);
 });
 
 $routes->get('webhook', [Home::class, 'webhook']);

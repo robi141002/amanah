@@ -4,7 +4,8 @@ namespace App\Controllers\Api;
 
 use App\Controllers\BaseApi;
 use App\Models\Bookings as DataModel;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Pasien;
+use App\Models\PenggunaModel;
 
 class Booking extends BaseApi
 {
@@ -12,6 +13,10 @@ class Booking extends BaseApi
 
     public function index()
     {
+        if (auth()->user()->inGroup('user')) {
+            $pasien = Pasien::where('user_id', auth()->user()->id)->first();
+            return $this->request->getVar('wrap') ? $this->respond([$this->request->getVar('wrap') => $this->modelName::where('pasien_id', $pasien->id)->with("kamar")->get()]) : $this->respond($this->modelName::where('pasien_id', $pasien->id)->with("kamar")->get());
+        }
         return $this->request->getVar('wrap') ? $this->respond([$this->request->getVar('wrap') => $this->modelName::with("kamar")->get()]) : $this->respond($this->modelName::with("kamar")->get());
     }
 
@@ -48,6 +53,13 @@ class Booking extends BaseApi
                 'ext_in[image,png,jpg,gif]',
             ],
         ]);
+
+        $user = PenggunaModel::find(auth()->user()->id);
+        $pasien = Pasien::where('user_id', auth()->user()->id)->get()->first();
+        $data->pasien_id = $pasien->id;
+        $data->name = $user->nama;
+        $data->address = $pasien->address;
+        $data->phone = $pasien->phone;
     }
 
     public function afterCreate(&$data)

@@ -71,7 +71,7 @@ class InitSeeder extends Seeder
         Bookings::insert([
             [
                 'pasien_id' => 1,
-                'code' => 'A0001',
+                'code' => 'RSAA2024001',
                 'room_id' => 1,
                 'date_in' => Carbon::now(),
                 'date_out' => Carbon::now(),

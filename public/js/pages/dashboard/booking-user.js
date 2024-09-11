@@ -36,19 +36,11 @@ const table = {
       {
         data: "id",
         render: function (data, type, row) {
-          const btnCek = `<a href="${row.ktp}" data-lightbox="file-${row.code}" class="btn-control btn-check blue darken-1" data-title="Cek data" data-id="${data}"><i class="material-icons">folder_open</i></a>`;
-          const btnConfirm = `<a href="#!" class="btn-control btn-confirm green darken-2" data-title="Konfirmasi" data-id="${data}"><i class="material-icons">done</i></a>`;
-          let images = ``;
-          $.each(["kk", "rujukan", "bpjs", "pasfoto", "sktm"], function (i, k) {
-            if (row[k] != null) {
-              images += `<a class="hide" href="${row[k]}" data-lightbox="file-${row.code}" data-title="${k}"</a>`;
-            }
-          });
           switch (row.status) {
-            case 1:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}</div>`;
+            case 0:
+              return `<div class="center" style="display: flex; gap: 5px; color: white;"><a href="#!" class="btn-control btn-cancel orange darken-2" data-title="Batal" data-id="${data}"><i class="material-icons">cancel</i></a></div>`;
             default:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}${btnConfirm}</div>`;
+              return `<div class="center" style="display: flex; gap: 5px; color: white;"></div>`;
           }
         },
       },
@@ -125,6 +117,8 @@ $("body").on("submit", "#form-booking", function (e) {
         Toast.fire({
           icon: i,
           title: t,
+        }).then(() => {
+          window.location.reload();
         });
       });
       cloud.pull("booking");
@@ -218,7 +212,7 @@ $(document).ready(async function () {
               $(".form-ready .date-ready").text(`${reserv.q.date_in.toString().replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")} - ${reserv.q.date_out.toString().replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}`);
               $(`.room`).removeClass("active").removeClass("disabled");
               $.each(
-                reserv.data.filter((v) => v.status > 0),
+                reserv.data.filter((v) => v.status != 11),
                 function (i, rsvp) {
                   $(`.room[data-id=${rsvp.room_id}]`).addClass("disabled");
                 }

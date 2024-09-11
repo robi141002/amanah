@@ -46,6 +46,7 @@ class Init extends Migration
             $table->text('pasfoto');
             $table->text('sktm')->nullable();
             $table->unsignedInteger('status')->default(0);
+            $table->text('keterangan')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -24,6 +24,32 @@ class Pasien extends BaseApi
         $user = $users->findById($users->getInsertID());
         $user->addGroup('user');
         $data->user_id = $users->getInsertID();
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://app.saungwa.com/api/create-message',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'appkey' => '141e8a84-1999-45c7-affa-083e66821031',
+                'authkey' => '7cKxLYc6ZGPsMWgJbU2scz0RBq31gxKxYEPNasJCn5EPz0YPMG',
+                'to' => 'RECEIVER_NUMBER',
+                'message' => 'Example message',
+                'sandbox' => 'false',
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
+
     }
 
     public function beforeUpdate(&$data)
