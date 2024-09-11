@@ -37,40 +37,47 @@ class Migrate extends BaseController
 
             $users = auth()->getProvider();
 
-
-
             // menambah user admin
             $user = new User([
                 'username' => 'admin',
-                'nama'     => 'Admin',
-                'email'    => 'admin@gmail.com',
+                'nama' => 'Admin',
+                'email' => 'admin@gmail.com',
                 'password' => 123456,
             ]);
             $users->save($user);
             $user = $users->findById($users->getInsertID());
             $user->addGroup('admin');
 
-               // menambah user admin
-               $user = new User([
+            // menambah user admin
+            $user = new User([
                 'username' => 'robi',
-                'nama'     => 'robi',
-                'email'    => 'adminrobi@gmail.com',
+                'nama' => 'robi',
+                'email' => 'adminrobi@gmail.com',
                 'password' => 123456,
             ]);
             $users->save($user);
             $user = $users->findById($users->getInsertID());
             $user->addGroup('admin');
-            
-            // $user = new User([
-            //     'username' => 'admin',
-            //     'nama'     => 'Admin',
-            //     'email'    => 'admin@gmail.com',
-            //     'password' => 123456,
-            // ]);
-            // $users->save($user);
-            // $user = $users->findById($users->getInsertID());
-            // $user->addGroup('admin');
 
+            $user = new User([
+                'username' => 'owner',
+                'nama' => 'Owner',
+                'email' => 'owner@gmail.com',
+                'password' => 123456,
+            ]);
+            $users->save($user);
+            $user = $users->findById($users->getInsertID());
+            $user->addGroup('owner');
+
+            $user = new User([
+                'username' => 'pasien1',
+                'nama' => 'Pasien 1',
+                'email' => 'pasien1@gmail.com',
+                'password' => 123456,
+            ]);
+            $users->save($user);
+            $user = $users->findById($users->getInsertID());
+            $user->addGroup('user');
 
         } catch (Throwable $e) {
             throw new Exception($e->getMessage());

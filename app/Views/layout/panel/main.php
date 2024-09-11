@@ -11,6 +11,7 @@
     <?= $this->renderSection('head') ?>
     <link href="<?= base_url() ?>css/datatables.min.css" rel="stylesheet">
     <?= $this->include('layout/style') ?>
+    <link rel="stylesheet" href="<?= base_url('css/air-datepicker.min.css') ?>">
     <link type="text/css" rel="stylesheet" href="<?= base_url('css/pages/panel.css') ?>" />
     <?= $this->renderSection('style') ?>
 </head>

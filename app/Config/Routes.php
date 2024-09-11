@@ -2,6 +2,7 @@
 
 use App\Controllers\Api\Booking;
 use App\Controllers\Api\Kamar;
+use App\Controllers\Api\Pasien;
 use App\Controllers\Home;
 use App\Controllers\Migrate;
 use App\Controllers\Panel\Dashboard;
@@ -29,12 +30,14 @@ $routes->group('api', static function (RouteCollection $routes) {
     $routes->resource('kamar', ['namespace' => '', 'controller' => Kamar::class, 'websafe' => 1]);
     $routes->get('booking/check', [Booking::class, 'check']);
     $routes->resource('booking', ['namespace' => '', 'controller' => Booking::class, 'websafe' => 1]);
+    $routes->resource('pasien', ['namespace' => '', 'controller' => Pasien::class, 'websafe' => 1]);
 });
 
 $routes->group('panel', static function (RouteCollection $routes) {
     $routes->get('/', [Dashboard::class, 'index']);
     $routes->get('kamar', [Dashboard::class, 'kamar']);
     $routes->get('booking', [Dashboard::class, 'booking']);
+    $routes->get('pasien', [Dashboard::class, 'pasien']);
 });
 
 $routes->get('webhook', [Home::class, 'webhook']);

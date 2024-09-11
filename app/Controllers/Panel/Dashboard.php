@@ -13,7 +13,11 @@ class Dashboard extends BaseDashboard
         $this->view->setData([
             'pageTitle' => 'Dashboard',
         ]);
-        return $this->view->render('pages/panel/dashboard');
+        if (auth()->user()->inGroup('user')) {
+            return $this->view->render('pages/panel/dashboard-user');
+        } else {
+            return $this->view->render('pages/panel/dashboard');
+        }
     }
 
     public function kamar()
@@ -32,6 +36,20 @@ class Dashboard extends BaseDashboard
             'pageTitle' => 'Data Booking',
             'items' => Bookings::all(),
         ]);
-        return $this->view->render('pages/panel/booking');
+        if (auth()->user()->inGroup('user')) {
+            return $this->view->render('pages/panel/booking-user');
+        } else {
+            return $this->view->render('pages/panel/booking');
+        }
+    }
+
+    public function pasien()
+    {
+        $this->view->setData([
+            'page' => 'data-pasien',
+            'pageTitle' => 'Data Pasien',
+            'items' => Bookings::all(),
+        ]);
+        return $this->view->render('pages/panel/pasien');
     }
 }

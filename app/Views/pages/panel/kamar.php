@@ -9,7 +9,7 @@ $this->extend('layout/panel/main');
         <div class="page-slider">
             <div class="page-slider-header">
                 <div class="page-slider-title">
-                    <h4>Daftar Kamar</h4>
+                    <h4>Data Kamar</h4>
                     <div style="display: flex; gap: 5px;">
                         <a href="#!" class="btn-header-slider btn-slider green" data-title="Tambah Kamar"
                             data-target="form">

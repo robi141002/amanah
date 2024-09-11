@@ -10,7 +10,7 @@ $this->extend('layout/landing/main');
         <div class="hero-desc">
             <p>Rumah Singgah Amanah melayani para pasien dhuafa dari luar kota yang sedang Berobat di RS Margono PWT baik kemoterapi, sinar, dll yang membutuhkan tempat singgah GRATIS
             </p>
-            <a href="<?= url_to('Home::form') ?>" class="waves-effect waves-light btn btn-large green darken-1">Daftar RSA</a>
+            <a href="<?= base_url('register') ?>" class="waves-effect waves-light btn btn-large green darken-1">Daftar RSA</a>
         </div>
     </div>
 </section>

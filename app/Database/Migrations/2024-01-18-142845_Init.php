@@ -10,6 +10,14 @@ class Init extends Migration
 {
     public function up()
     {
+        Eloquent::schema()->create('pasien', function (Blueprint $table) {
+            $table->id();
+            $table->integer('user_id');
+            $table->text('address')->nullable();
+            $table->string('phone', 64)->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
         Eloquent::schema()->create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255)->nullable();
@@ -19,6 +27,10 @@ class Init extends Migration
         });
         Eloquent::schema()->create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pasien_id')
+                ->constrained('pasien')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->string('code', 255)->nullable();
             $table->foreignId('room_id');
             $table->date('date_in');
@@ -41,6 +53,9 @@ class Init extends Migration
 
     public function down()
     {
+        Eloquent::dropIfExists('pasien');
+        Eloquent::dropIfExists('admin');
+        Eloquent::dropIfExists('owner');
         Eloquent::dropIfExists('rooms');
         Eloquent::dropIfExists('bookings');
     }

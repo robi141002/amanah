@@ -41,3 +41,10 @@
 .auth-wrapper .auth-card .title {
     font-weight: bold;
 }
+
+.row {
+    margin-bottom: 0;
+}
+.input-field {
+    margin-bottom: 0;
+}

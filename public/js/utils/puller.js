@@ -6,8 +6,9 @@ class Puller {
       method: "",
       param: "",
       wrap: "",
-      data: [],
+      data: null,
       callbacks: [],
+      done: false,
     }
   ) {
     this.callbacks = prop.callbacks;
@@ -17,6 +18,7 @@ class Puller {
     this.method = prop.method;
     this.param = prop.param;
     this.wrap = prop.wrap;
+    this.done = prop.done;
   };
   datasets = [];
   constructor() {}
@@ -24,6 +26,11 @@ class Puller {
   get(...name) {
     let iterator = [];
     let result = {};
+    if (name.length == 0) {
+      this.datasets.forEach(ds => {
+        result[ds.name] = ds.data;
+      });
+    }
     if (Array.isArray(name[0])) {
       if (name[0].map((l) => typeof l == "string").includes(false)) return false;
       iterator = name[0];
@@ -31,16 +38,16 @@ class Puller {
       if (name.map((l) => typeof l == "string").includes(false)) return false;
       iterator = name;
     }
-    iterator.map((key) => {
-      if (this.datasets.find((v) => v.name == key)) {
-        result[key] = this.datasets.find((v) => v.name == key).data;
-      }
-    });
 
-    if (result == {}) {
-      return false;
+    for (const key of iterator) {
+      const r = this.datasets.find((v) => v.name == key) ?? false;
+      if (iterator.length == 1) {
+        return r ? r.data : r;
+      }
+      result[key] = r ? r.data : r;
     }
-    return Object.keys(result).length == 1 ? result[Object.keys(result)[0]] : result;
+
+    return result;
   }
 
   addCallback(name = "", callback = function () {}) {
@@ -51,6 +58,7 @@ class Puller {
   }
 
   async pull(...name) {
+    let result = {};
     let iterator = [];
     if (Array.isArray(name[0])) {
       if (name[0].map((l) => typeof l == "string").includes(false)) return false;
@@ -60,20 +68,32 @@ class Puller {
       iterator = name;
     }
     if (undefined == name[0]) iterator = this.datasets.map((d) => d.name);
-    iterator.map(async (key) => {
+    for (const key of iterator) {
       if (this.datasets.map((d) => d.name).includes(key)) {
         let item = this.datasets.find((v) => v.name == key);
-        item.data = await this.fetch(item.url, {
-          method: item.method,
-          data: item.param,
-          wrap: item.wrap,
-        });
-        item.callbacks.forEach((cb) => {
-          cb(item.data);
-        });
+        item.done = false;
+        try {
+          item.data = await this.fetch(item.url, {
+            method: item.method,
+            data: item.param,
+            wrap: item.wrap,
+          });
+          item.callbacks.forEach((cb) => {
+            cb(item.data);
+          });
+        } catch (error) {
+          item.data = null;
+        }
+        item.done = true;
+        if (iterator.length == 1) {
+          return item.data;
+        }
+        result[key] = item.data;
+      } else {
+        result[key] = false;
       }
-    });
-    return this;
+    }
+    return result;
   }
 
   async add(
@@ -86,21 +106,29 @@ class Puller {
       wrap: false,
     }
   ) {
-    let data = await this.fetch(url, options);
     const newDs = new this._datasetprop({
       name: options.name ?? url,
       url: url,
-      data: data,
+      data: null,
       method: options.method ?? "GET",
       param: options.data ?? {},
       wrap: options.wrap ?? false,
       callbacks: [],
+      done: false,
     });
-    if (options.callback) {
-      console.log(newDs);
-      newDs.callbacks.push(options.callback);
-    }
     this.datasets.push(newDs);
+    let data = null;
+    try {
+      data = await this.fetch(url, options);
+      newDs.data = data;
+      if (options.callback) {
+        newDs.callbacks.push(options.callback);
+      }
+    } catch (error) {
+      newDs.data = null;
+    }
+    newDs.done = true;
+    return data;
   }
   async fetch(
     url,

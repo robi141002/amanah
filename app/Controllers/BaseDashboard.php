@@ -22,24 +22,71 @@ abstract class BaseDashboard extends BaseController
             'page' => "dashboard",
             'user' => $user,
         ]);
-        $this->view->setData([
-            'menu' => [
-                'Dashboard' => [
-                    'id' => 'dashboard',
-                    'icon' => 'house',
-                    'url' => base_url('/panel'),
+        if (auth()->user()->inGroup('admin')) {
+            $this->view->setData([
+                'menu' => [
+                    'Dashboard' => [
+                        'id' => 'dashboard',
+                        'icon' => 'house',
+                        'url' => base_url('/panel'),
+                    ],
+                    'Data Booking' => [
+                        'id' => 'data-booking',
+                        'icon' => 'book-bookmark',
+                        'url' => base_url('/panel/booking'),
+                    ],
+                    'Manajemen Kamar' => [
+                        'id' => 'manajemen-kamar',
+                        'icon' => 'door-open',
+                        'url' => base_url('/panel/kamar'),
+                    ],
+                    'Data Pasien' => [
+                        'id' => 'data-pasien',
+                        'icon' => 'circle-user',
+                        'url' => base_url('/panel/pasien'),
+                    ],
                 ],
-                'Manajemen Kamar' => [
-                    'id' => 'manajemen-kamar',
-                    'icon' => 'door-open',
-                    'url' => base_url('/panel/kamar'),
+            ]);
+        } elseif (auth()->user()->inGroup('owner')) {
+            $this->view->setData([
+                'menu' => [
+                    'Dashboard' => [
+                        'id' => 'dashboard',
+                        'icon' => 'house',
+                        'url' => base_url('/panel'),
+                    ],
+                    'Laporan Booking' => [
+                        'id' => 'laporan-booking',
+                        'icon' => 'book-bookmark',
+                        'url' => base_url('/panel/laporan'),
+                    ],
                 ],
-                'Data Booking' => [
-                    'id' => 'data-booking',
-                    'icon' => 'hourglass-half',
-                    'url' => base_url('/panel/booking'),
+            ]);
+        } else {
+            $this->view->setData([
+                'menu' => [
+                    'Dashboard' => [
+                        'id' => 'dashboard',
+                        'icon' => 'house',
+                        'url' => base_url('/panel'),
+                    ],
+                    'Booking' => [
+                        'id' => 'data-booking',
+                        'icon' => 'book-bookmark',
+                        'url' => base_url('/panel/booking'),
+                    ],
+                    'Cetak Invoice Booking' => [
+                        'id' => 'laporan-booking',
+                        'icon' => 'receipt',
+                        'url' => base_url('/panel/cetak'),
+                    ],
+                    'Master Data' => [
+                        'id' => 'master-data',
+                        'icon' => 'circle-user',
+                        'url' => base_url('/panel/master'),
+                    ],
                 ],
-            ],
-        ]);
+            ]);
+        }
     }
 }

@@ -5,8 +5,6 @@ namespace App\Controllers;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\RESTful\ResourceController;
-use Illuminate\Database\Eloquent\Model;
 use Psr\Log\LoggerInterface;
 
 class BaseApi extends BaseController
@@ -14,6 +12,8 @@ class BaseApi extends BaseController
     use ResponseTrait;
 
     protected $modelName;
+    protected $load = [];
+    protected $append = [];
 
     public function initController(
         RequestInterface $request,
@@ -25,7 +25,17 @@ class BaseApi extends BaseController
 
     public function index()
     {
-        return $this->request->getVar('wrap') ? $this->respond([$this->request->getVar('wrap') => $this->modelName::all()]) : $this->respond($this->modelName::all());
+        $data = $this->modelName::all();
+        if ($this->load) {
+            $data = $data->load($this->load);
+        }
+        if ($this->append) {
+            $data = $data->append($this->append);
+        }
+        if ($this->request->getVar('wrap')) {
+            return $this->respond([$this->request->getVar('wrap') => $data]);
+        }
+        return $this->respond($data);
     }
 
     /**
@@ -37,7 +47,8 @@ class BaseApi extends BaseController
      */
     public function show($id = null)
     {
-        return $this->fail(lang('RESTful.notImplemented', ['show']), 501);
+        $data = $this->modelName::find($id);
+        return $this->respond($data);
     }
 
     /**
@@ -45,13 +56,22 @@ class BaseApi extends BaseController
      *
      * @return ResponseInterface|string|void
      */
-    public function new()
+    public function new ()
     {
         return $this->fail(lang('RESTful.notImplemented', ['new']), 501);
     }
 
     public function beforeCreate(&$data)
     {
+    }
+
+    public function validateCreate(&$request)
+    {
+        return true;
+    }
+    public function validateUpdate(&$request)
+    {
+        return true;
     }
 
     /**
@@ -62,11 +82,17 @@ class BaseApi extends BaseController
     public function create()
     {
         $data = new $this->modelName;
-        $data->fill($this->request->getVar());
 
+        $request = (array) $this->request->getVar();
+        if ($this->validateCreate($request) == false) {
+            return $this->failValidationErrors($this->validator->getErrors());
+        }
+
+        $data->fill($request);
         $this->beforeCreate($data);
         $data->save();
         $this->afterCreate($data);
+
         return $this->respond([
             'messages' => [
                 'success' => 'data baru berhasil di tambahkan',
@@ -100,16 +126,22 @@ class BaseApi extends BaseController
      */
     public function update($id = null)
     {
+        $request = (array) $this->request->getVar();
+        if ($this->validateUpdate($request) == false) {
+            return $this->failValidationErrors($this->validator->getErrors());
+        }
         if ($data = $this->modelName::find($id)) {
             $data->fill($this->request->getVar());
 
             $this->beforeUpdate($data);
             $data->save();
             $this->afterUpdate($data);
+
             return $this->respond([
                 'messages' => [
-                    'success' => 'data berhasil di ubah',
+                    'success' => 'data berhasil di simpan',
                 ],
+                'data' => $data,
             ]);
         }
         return $this->failNotFound('Data tidak ditemukan');
@@ -119,6 +151,12 @@ class BaseApi extends BaseController
     {
     }
     public function afterUpdate(&$data)
+    {
+    }
+    public function beforeDelete(&$data)
+    {
+    }
+    public function afterDelete(&$data)
     {
     }
 
@@ -132,9 +170,18 @@ class BaseApi extends BaseController
     public function delete($id = null)
     {
         if ($data = $this->modelName::find($id)) {
+            $this->beforeDelete($data);
             $data->delete();
+            $this->afterDelete($data);
 
-            return $this->respondDeleted($data);
+            return $this->respondDeleted(
+                [
+                    'messages' => [
+                        'success' => 'data berhasil di hapus',
+                    ],
+                    'data' => $data,
+                ]
+            );
         }
         return $this->failNotFound('Data tidak ditemukan');
     }

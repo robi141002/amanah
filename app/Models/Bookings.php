@@ -39,7 +39,7 @@ class Bookings extends Model
     protected static function booted(): void
     {
         static::created(function (Bookings $booking) {
-            $booking->code = range("A", "Z")[$booking->room_id - 1] . $booking->created_at->format('Ymd') . sprintf("%04d", $booking->id);
+            $booking->code = "RSA" . range("A", "Z")[$booking->room_id - 1] . $booking->created_at->format('Ymd') . sprintf("%04d", $booking->id);
             $booking->save();
         });
     }

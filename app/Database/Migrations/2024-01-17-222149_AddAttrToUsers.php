@@ -25,6 +25,7 @@ class AddAttrToUsers extends Migration
     {
         $fields = [
             'nama' => ['type' => 'VARCHAR', 'constraint' => '64', 'null' => true],
+            'email' => ['type' => 'VARCHAR', 'constraint' => '64', 'null' => true],
         ];
         $this->forge->addColumn($this->tables['users'], $fields);
     }
@@ -33,6 +34,7 @@ class AddAttrToUsers extends Migration
     {
         $fields = [
             'nama',
+            'email',
         ];
         $this->forge->dropColumn($this->tables['users'], $fields);
     }

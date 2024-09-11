@@ -16,10 +16,10 @@ $this->extend('layout/panel/main');
                 <table class="highlight responsive-table" id="kamar" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>Kode</th>
+                            <th>Kode Booking</th>
                             <th>Kamar</th>
                             <th>Nama</th>
-                            <th>Tanggal</th>
+                            <th>Tanggal Booking</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
