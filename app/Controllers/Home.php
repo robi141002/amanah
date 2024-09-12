@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use Illuminate\Support\Carbon;
 
 class Home extends BaseController

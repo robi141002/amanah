@@ -76,7 +76,7 @@ abstract class BaseDashboard extends BaseController
                         'url' => base_url('/panel/booking'),
                     ],
                     'Cetak Invoice Booking' => [
-                        'id' => 'laporan-booking',
+                        'id' => 'cetak-invoice',
                         'icon' => 'receipt',
                         'url' => base_url('/panel/cetak'),
                     ],

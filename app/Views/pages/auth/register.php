@@ -47,7 +47,7 @@
         <?php endif?>
 
         <div class="row">
-            <form class="col s12" action="<?=url_to('register')?>" method="post">
+            <form class="col s12" action="<?=url_to('register')?>" id="form-register" method="post">
                 <?=csrf_field()?>
                 <div class="row">
                     <div class="input-field col s12">
@@ -120,4 +120,8 @@
     </div>
 </div>
 
+<?=$this->endSection()?>
+
+<?=$this->section('script')?>
+<script src="<?= base_url() ?>js/pages/register.js"></script>
 <?=$this->endSection()?>

@@ -74,4 +74,21 @@ class Dashboard extends BaseDashboard
         ]);
         return $this->view->render('pages/panel/laporan');
     }
+
+    public function cetak()
+    {
+        $this->view->setData([
+            'page' => 'cetak-invoice',
+            'pageTitle' => 'Cetak Invoice Booking',
+        ]);
+        return $this->view->render('pages/panel/cetak');
+    }
+
+    public function invoice(int $id)
+    {
+        $this->view->setData([
+            'invoice' => Bookings::find($id),
+        ]);
+        return $this->view->render('pages/panel/invoice');
+    }
 }

@@ -24,32 +24,27 @@ class Pasien extends BaseApi
         $user = $users->findById($users->getInsertID());
         $user->addGroup('user');
         $data->user_id = $users->getInsertID();
+    }
 
-        $curl = curl_init();
+    public function afterCreate(&$data)
+    {
+        $client = \Config\Services::curlrequest();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://app.saungwa.com/api/create-message',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'appkey' => '141e8a84-1999-45c7-affa-083e66821031',
-                'authkey' => '7cKxLYc6ZGPsMWgJbU2scz0RBq31gxKxYEPNasJCn5EPz0YPMG',
-                'to' => 'RECEIVER_NUMBER',
-                'message' => 'Example message',
+        $response = $client->request('POST', 'https://app.saungwa.com/api/create-message', [
+            'form_params' => [
+                'appkey' => env('WA_APPKEY'),
+                'authkey' => env('WA_AUTHKEY'),
+                'to' => $data->phone,
+                'message' => "Anda telah terdaftar pada sistem Rumah Singgah Amanah dengan detail akun sebagai berikut :
+- Nama : " . $data->user->nama . "
+- Username : " . $data->user->username . "
+- Email : " . $data->user->email . "
+- Nomor Whatsapp : " . $data->phone . "
+Silahkan login dengan username dan password tersebut.
+                ",
                 'sandbox' => 'false',
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        echo $response;
-
+            ]
+        ]);
     }
 
     public function beforeUpdate(&$data)
