@@ -86,8 +86,12 @@ class Dashboard extends BaseDashboard
 
     public function invoice(int $id)
     {
+        $data = Bookings::where('id', $id)->where('status', 1)->get()->first();
+        if (!$data) {
+            return redirect()->to(base_url());
+        }
         $this->view->setData([
-            'invoice' => Bookings::find($id),
+            'invoice' => $data,
         ]);
         return $this->view->render('pages/panel/invoice');
     }

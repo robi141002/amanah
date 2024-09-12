@@ -32,6 +32,8 @@ const table = {
         data: "status",
         render: function (data, type, row) {
           switch (data) {
+            case 11:
+              return "Ditolak";
             case 1:
               return "Dikonfirmasi";
             default:
@@ -45,16 +47,16 @@ const table = {
           const btnCek = `<a href="${row.ktp}" data-lightbox="file-${row.code}" class="btn-control btn-check blue darken-1" data-title="Cek data" data-id="${data}"><i class="material-icons">folder_open</i></a>`;
           const btnConfirm = `<a href="#!" class="btn-control btn-confirm green darken-2" data-title="Konfirmasi" data-id="${data}"><i class="material-icons">done</i></a>`;
           let images = ``;
-          $.each(["kk", "rujukan", "bpjs", "pasfoto", "sktm"], function (i, k) { 
-            if(row[k] != null) {
+          $.each(["kk", "rujukan", "bpjs", "pasfoto", "sktm"], function (i, k) {
+            if (row[k] != null) {
               images += `<a class="hide" href="${row[k]}" data-lightbox="file-${row.code}" data-title="${k}"</a>`;
             }
           });
           switch (row.status) {
-            case 1:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}</div>`;
+            case 0:
+              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}${btnConfirm}<a href="#!" class="btn-control btn-tolak orange darken-2" data-title="Tolak" data-id="${data}"><i class="material-icons">cancel</i></a></div>`;
             default:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}${btnConfirm}<a href="#!" class="btn-control btn-danger orange darken-2" data-title="Tolak" data-id="${data}"><i class="material-icons">cancel</i></a></div>`;
+              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}</div>`;
           }
         },
       },
@@ -80,6 +82,38 @@ $("body").on("click", ".btn-confirm", function (e) {
         dataType: "json",
         data: {
           status: 1,
+        },
+        success: (res) => {
+          $.each(res.messages, function (i, t) {
+            Toast.fire({
+              icon: "success",
+              title: "Data berhasil di simpan",
+            });
+          });
+          cloud.pull("booking");
+        },
+      });
+    }
+  });
+});
+$("body").on("click", ".btn-tolak", function (e) {
+  const id = $(this).data("id");
+  const data = cloud.get("booking").find((e) => e.id == id);
+  Swal.fire({
+    title: "Berikan keterangan penolakan",
+    input: "text",
+    showCancelButton: true,
+    confirmButtonText: "Tolak",
+    showLoaderOnConfirm: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "POST",
+        url: baseUrl + "api/booking/" + id,
+        dataType: "json",
+        data: {
+          status: 11,
+          keterangan: result.value,
         },
         success: (res) => {
           $.each(res.messages, function (i, t) {

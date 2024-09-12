@@ -1,0 +1,94 @@
+.parent-wrapper {
+  position: relative;
+  width: 21cm;
+  height: auto;
+  padding: 0.5cm;
+  overflow: hidden;
+  background: white;
+}
+
+#paper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: white;
+  border: 3px solid green;
+}
+.content-wrapper {
+  position: relative;
+  padding: 1.5rem 3.5rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+.content-wrapper .header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.content-wrapper .header .title {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 3em;
+  color: green;
+}
+.content-wrapper .header img {
+  width: 10rem;
+}
+.content-wrapper .address  {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+.content-wrapper .address h1  {
+  position: relative;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 0;
+  margin: 0;
+  color: green;
+}
+.content-wrapper .address p {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+.content-wrapper .booking {
+  position: relative;
+  padding: 3rem 0;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
+}
+.content-wrapper .booking p,
+.content-wrapper .booking h1 {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.content-wrapper .booking h1 {
+  font-weight: bold;
+  font-size: 2.5em;
+  text-transform: uppercase;
+}
+.content-wrapper .kontak {
+  padding-top: 4rem;
+  padding-bottom: 5rem;
+}
+.content-wrapper .kontak p,
+.content-wrapper .kontak h1 {
+  margin: 0;
+  padding: 0;
+}
+.footer-wrapper {
+  background-color: green;
+  color: white;
+  text-align: center;
+}
+.footer-wrapper p {
+  padding: 1rem;
+  margin: 0;
+}
