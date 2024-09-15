@@ -13,6 +13,7 @@
         "php": "^7.4 || ^8.0",
         "codeigniter4/framework": "^4.0",
         "codeigniter4/shield": "^1.0",
+        "dompdf/dompdf": "^3.0",
         "illuminate/database": "^10.41",
         "illuminate/events": "^10.41"
     },

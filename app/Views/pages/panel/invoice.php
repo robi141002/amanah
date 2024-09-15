@@ -32,12 +32,12 @@
                 <div class="booking">
                     <p><b>Kode Booking</b></p>
                     <h1><?= $invoice->code ?></h1>
-                    <table class="highlight">
+                    <table class="highlight" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>Nama</th>
-                                <th>Alamat</th>
-                                <th>Tanggal Booking</th>
+                                <th style="text-align: start;">Nama</th>
+                                <th style="text-align: start;">Alamat</th>
+                                <th style="text-align: start;">Tanggal Booking</th>
                             </tr>
                             <tbody>
                                 <tr>

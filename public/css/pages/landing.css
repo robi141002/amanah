@@ -1,11 +1,17 @@
+* {
+  scroll-behavior: smooth;
+}
+
 .header-wrapper {
-  position: relative;
+  position: sticky;
+  top: 0;
   background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
   box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.2);
+  z-index: 10;
 }
 
 .header-wrapper img {
@@ -28,6 +34,47 @@
 .header-wrapper .social:hover {
   color: white;
   background-color: #2a2a2a;
+}
+
+.nav-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 1rem;
+}
+.nav-wrapper .nav-button {
+  position: relative;
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.nav-wrapper .nav-button:hover {
+  color: var(--primary-color);
+}
+
+.section-title {
+  position: relative;
+  font-size: 4rem;
+  font-weight: bold;
+  margin-top: 8rem;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5rem;
+  height: 0.5rem;
+  background-color: var(--primary-color);
+  border-radius: 0.5rem;
 }
 
 .content-wrapper {

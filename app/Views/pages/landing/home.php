@@ -4,7 +4,7 @@ $this->extend('layout/landing/main');
 ?>
 
 <?= $this->section('content') ?>
-<section id="hero">
+<section id="beranda">
     <div class="hero-content">
         <img src="<?= base_url('img/foto/hero.jpg') ?>" alt="hero">
         <div class="hero-desc">
@@ -14,7 +14,8 @@ $this->extend('layout/landing/main');
         </div>
     </div>
 </section>
-<section id="fasilitas">
+<section id="layanan">
+    <h1 class="section-title">Layanan</h1>
     <div class="fasilitas-wrapper">
         <div class="fasilitas-item">
             <i class="fa-solid fa-truck-medical"></i>
@@ -55,6 +56,7 @@ $this->extend('layout/landing/main');
     </div>
 </section>
 <section id="galeri">
+    <h1 class="section-title">Galeri</h1>
     <div class="galeri-wrapper">
         <a href="<?= base_url('img/foto/14.PNG') ?>" data-lightbox="galeri">
             <img src="<?= base_url('img/foto/14.PNG') ?>" alt="">
@@ -70,7 +72,8 @@ $this->extend('layout/landing/main');
         </a>
     </div>
 </section>
-<section id="ketentuan">
+<section id="persyaratan">
+<h1 class="section-title">Persyaratan</h1>
     <div class="ketentuan-wrapper">
         <div class="ketentuan-icon">
             <i class="fa-solid fa-hospital-user"></i>
@@ -95,9 +98,10 @@ $this->extend('layout/landing/main');
         </div>
     </div>
 </section>
-<section id="alamat">
+<section>
     <div class="alamat-wrapper">
         <img src="<?= base_url('img/foto/street.jpg') ?>" alt="">
+        <h1 class="section-title" id="tentang">Tentang</h1>
         <div class="alamat-maps">
             <div class="alamat-maps-item maps-wrapper">
                 <div style="width: 100%">

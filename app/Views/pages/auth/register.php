@@ -98,6 +98,12 @@
                         </label>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="address" name="address" class="materialize-textarea" required></textarea>
+                        <label for="address">Alamat</label>
+                    </div>
+                </div>
                 <br>
                 <button type="submit" class="btn waves-effect waves-light btn-auth">
                     <?=lang('Auth.register')?>
@@ -123,5 +129,5 @@
 <?=$this->endSection()?>
 
 <?=$this->section('script')?>
-<script src="<?= base_url() ?>js/pages/register.js"></script>
+<script src="<?=base_url()?>js/pages/register.js"></script>
 <?=$this->endSection()?>

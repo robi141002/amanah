@@ -43,7 +43,7 @@ const table = {
         render: function (data, type, row) {
           switch (row.status) {
             case 1:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;"><a href="${origin}/invoice/${data}" class="btn blue" target="_blank">Cetak Invoice</div>`;
+              return `<div class="center" style="display: flex; gap: 5px; color: white;"><a href="${origin}/invoice/${data}" class="btn blue" target="_blank">Cetak</a><a href="${origin}/invoice/${data}" class="btn blue btn-pdf" target="_blank">Unduh</a></div>`;
             default:
               return `-`;
           }
@@ -52,6 +52,25 @@ const table = {
     ],
   }),
 };
+
+$("body").on("click", ".btn-pdf", function (e) {
+  e.preventDefault();
+  const url = $(this).attr("href");
+  $.ajax({
+    dataType: "native",
+    url: url,
+    xhrFields: {
+      responseType: "blob",
+    },
+    success: function (blob) {
+      console.log(blob.size);
+      var link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "invoice_" + new Date() + ".pdf";
+      link.click();
+    },
+  });
+});
 
 const localeEn = {
   days: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"],
@@ -164,70 +183,5 @@ $(document).ready(async function () {
   });
   cloud.addCallback("booking", function (data) {
     console.log(data);
-  });
-  cloud.pull("kamar");
-  dateIn = new AirDatepicker("#date-in", {
-    locale: localeEn,
-    startDate: new Date(),
-    inline: true,
-    minDate: new Date(),
-    onSelect({ date }) {
-      dateOut.update({
-        minDate: date,
-      });
-    },
-  });
-  dateOut = new AirDatepicker("#date-out", {
-    locale: localeEn,
-    startDate: new Date(),
-    inline: true,
-    onSelect({ date }) {
-      dateIn.update({
-        maxDate: date,
-      });
-    },
-  });
-
-  $("body").on("click", "#btn-check", function (e) {
-    if (dateIn.selectedDates.length == 0 || dateOut.selectedDates.length == 0) {
-      M.toast({ html: "Pilih tanggal masuk dan keluar terlebih dahulu", classes: "red" });
-      return false;
-    }
-    $(".form-tanggal").fadeOut("fast", function () {
-      $(".loader").fadeIn("fast").removeClass("hide").find("p").text("Menunggu respon server...");
-      setTimeout(() => {
-        $.ajax({
-          type: "GET",
-          url: baseUrl + "api/booking/check",
-          data: {
-            date_in: store.form.date_in,
-            date_out: store.form.date_out,
-          },
-          dataType: "json",
-          success: function (reserv) {
-            console.log(reserv.data);
-            if (cloud.get("kamar").length == reserv.data.filter((v) => v.status > 0).length) {
-              $(".loader").fadeOut("fast", function () {
-                $(".unavailable").removeClass("hide");
-              });
-              return false;
-            }
-            $(".loader").fadeOut("fast", () => {
-              $(".form-ready").fadeIn("fast").removeClass("hide");
-              $(".form-ready .date-ready").text(`${reserv.q.date_in.toString().replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")} - ${reserv.q.date_out.toString().replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}`);
-              $(`.room`).removeClass("active").removeClass("disabled");
-              $.each(
-                reserv.data.filter((v) => v.status != 11),
-                function (i, rsvp) {
-                  $(`.room[data-id=${rsvp.room_id}]`).addClass("disabled");
-                }
-              );
-              $(".form-ready input[name=room_id]").val("");
-            });
-            console.log(reserv);
-          },
-        });
-      }, 1000);
-    });
   });
 });

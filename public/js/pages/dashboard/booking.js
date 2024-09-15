@@ -101,7 +101,13 @@ $("body").on("click", ".btn-tolak", function (e) {
   const data = cloud.get("booking").find((e) => e.id == id);
   Swal.fire({
     title: "Berikan keterangan penolakan",
-    input: "text",
+    input: "textarea",
+    inputLabel: "Keterangan",
+    inputValidator: (value) => {
+      if (!value) {
+        return "Keterangan tidak boleh kosong!";
+      }
+    },
     showCancelButton: true,
     confirmButtonText: "Tolak",
     showLoaderOnConfirm: true,

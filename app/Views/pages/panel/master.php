@@ -11,14 +11,14 @@ $this->extend('layout/panel/main');
                 <div class="page-slider-title">
                     <h4>Master Data</h4>
                     <div style="display: flex; gap: 5px;">
-                        <a href="#!" class="btn-header-slider blue" data-title="Ubah Password">
+                        <a href="#modal2" class="btn-header-slider btn-edit-password modal-trigger blue" data-title="Ubah Password">
                             <i class="material-icons">vpn_key</i>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="page-slider-body">
-                <form class="col s12" action="<?=base_url('api/pasien/' . $pasien->id)?>" method="POST">
+                <form class="col s12" action="<?=base_url('api/pasien/' . $pasien->id)?>" method="POST" id="form-master">
                     <?=csrf_field()?>
                     <div class="container">
                         <div class="row">
@@ -81,7 +81,7 @@ $this->extend('layout/panel/main');
         <h4>Ubah Password</h4>
         <form class="col s12" action="<?=url_to('register')?>" method="post" id="form-password">
             <?=csrf_field()?>
-            <input type="hidden" name="id" id="password-id">
+            <input type="hidden" name="id" id="password-id" value="<?= $pasien->id ?>">
             <div class="container">
                 <div class="row">
                     <div class="input-field col s12">
@@ -110,4 +110,5 @@ $this->extend('layout/panel/main');
 </div>
 <?=$this->endSection()?>
 <?=$this->section('script')?>
+<script src="<?= base_url() ?>js/pages/dashboard/master.js"></script>
 <?=$this->endSection()?>
