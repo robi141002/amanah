@@ -2,9 +2,9 @@
 /** @var \CodeIgniter\View\View $this */
 $this->extend('layout/panel/main');
 ?>
-<?= $this->section('style') ?>
-<link rel="stylesheet" href="<?= base_url('css/pages/form.css') ?>">
-<?= $this->endSection() ?>
+<?=$this->section('style')?>
+<link rel="stylesheet" href="<?=base_url('css/pages/form.css')?>">
+<?=$this->endSection()?>
 <?=$this->section('main')?>
 <div class="panel-card max">
     <div class="page-slider-wrapper">
@@ -29,6 +29,16 @@ $this->extend('layout/panel/main');
                 </table>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="modal-invoice" class="modal">
+    <div class="modal-content">
+        <h4>Invoice</h4>
+        <iframe src="#!" id="invoice" frameborder="0" style="width: 100%; height: 40rem"></iframe>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Tutup</a>
     </div>
 </div>
 <?=$this->endSection()?>

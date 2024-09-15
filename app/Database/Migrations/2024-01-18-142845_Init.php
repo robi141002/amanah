@@ -31,20 +31,27 @@ class Init extends Migration
                 ->constrained('pasien')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->foreignId('room_id')->references('id')->on('rooms');
             $table->string('code', 255)->nullable();
-            $table->foreignId('room_id');
-            $table->date('date_in');
-            $table->date('date_out');
-            $table->foreign('room_id')->references('id')->on('rooms');
             $table->string('name', 64);
             $table->text('address');
             $table->string('phone', 64);
+            $table->date('date_in');
+            $table->date('date_out');
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
+            $table->date('birthdate');
+            $table->string('kriteria', 64);
             $table->text('kk');
             $table->text('ktp');
+            $table->text('pasfoto');
             $table->text('rujukan');
             $table->text('bpjs');
-            $table->text('pasfoto');
             $table->text('sktm')->nullable();
+            $table->string('pendamping_name', 64);
+            $table->text('pendamping_address');
+            $table->string('pendamping_phone', 64);
+            $table->text('pendamping_ktp');
+            $table->text('pendamping_pasfoto');
             $table->unsignedInteger('status')->default(0);
             $table->text('keterangan')->nullable();
             $table->timestamps();

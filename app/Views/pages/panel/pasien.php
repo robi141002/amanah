@@ -11,7 +11,7 @@ $this->extend('layout/panel/main');
                 <div class="page-slider-title">
                     <h4>Data Pasien</h4>
                     <div style="display: flex; gap: 5px;">
-                        <a href="#!" class="btn-header-slider btn-slider green" data-title="Tambah Kamar"
+                        <a href="#!" class="btn-header-slider btn-slider green" data-title="Tambah Pasien"
                             data-target="form">
                             <i class="material-icons">add</i>
                         </a>
@@ -87,6 +87,12 @@ $this->extend('layout/panel/main');
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
+                                <textarea id="address" name="address" class="materialize-textarea" required></textarea>
+                                <label for="address">Alamat</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                                 <input id="password" name="password" type="password" class="validate" required>
                                 <label for="password">
                                     <?=lang('Auth.password')?>
@@ -125,7 +131,8 @@ $this->extend('layout/panel/main');
             <div class="container">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="edit-nama" name="nama" type="text" class="validate" value="<?=old('nama')?>" required>
+                        <input id="edit-nama" name="nama" type="text" class="validate" value="<?=old('nama')?>"
+                            required>
                         <label for="edit-nama">
                             Nama
                         </label>
@@ -164,7 +171,8 @@ $this->extend('layout/panel/main');
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="edit-password_confirm" name="password_confirm" type="password" class="validate" required>
+                        <input id="edit-password_confirm" name="password_confirm" type="password" class="validate"
+                            required>
                         <label for="edit-password_confirm">
                             <?=lang('Auth.passwordConfirm')?>
                         </label>

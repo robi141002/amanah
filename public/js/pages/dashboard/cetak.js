@@ -43,7 +43,7 @@ const table = {
         render: function (data, type, row) {
           switch (row.status) {
             case 1:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;"><a href="${origin}/invoice/${data}" class="btn blue" target="_blank">Cetak</a><a href="${origin}/invoice/${data}" class="btn blue btn-pdf" target="_blank">Unduh</a></div>`;
+              return `<div class="center" style="display: flex; gap: 5px; color: white;"><a href="${origin}/invoice/${data}" class="btn blue" target="_blank">Cetak</a><a class="btn-pdf btn blue">Unduh</a></div>`;
             default:
               return `-`;
           }
@@ -55,21 +55,11 @@ const table = {
 
 $("body").on("click", ".btn-pdf", function (e) {
   e.preventDefault();
-  const url = $(this).attr("href");
-  $.ajax({
-    dataType: "native",
-    url: url,
-    xhrFields: {
-      responseType: "blob",
-    },
-    success: function (blob) {
-      console.log(blob.size);
-      var link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = "invoice_" + new Date() + ".pdf";
-      link.click();
-    },
-  });
+  const data = table.booking.row($(this).closest("tr")).data();
+  document.getElementById("invoice").src = origin + "/invoice/download/" + data.id;
+  setTimeout(() => {
+    html2pdf().from(document.getElementById("invoice").contentWindow.document.body).save(`invoice_${data.code}.pdf`);
+  }, 1000);
 });
 
 const localeEn = {
@@ -183,5 +173,11 @@ $(document).ready(async function () {
   });
   cloud.addCallback("booking", function (data) {
     console.log(data);
+  });
+
+  $(".modal").modal({
+    dismissible: false,
+    onOpenStart: function () {},
+    onCloseEnd: function () {},
   });
 });

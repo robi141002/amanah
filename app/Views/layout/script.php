@@ -7,4 +7,5 @@
 <script type="text/javascript" src="<?= base_url('js/lightbox.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('js/jquery.waypoints.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('js/jquery.counterup.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('js/moment.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('js/main.js') ?>"></script>

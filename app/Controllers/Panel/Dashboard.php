@@ -7,6 +7,7 @@ use App\Models\Bookings;
 use App\Models\Pasien;
 use App\Models\PenggunaModel;
 use App\Models\Rooms;
+use Dompdf\Dompdf;
 
 class Dashboard extends BaseDashboard
 {
@@ -14,6 +15,7 @@ class Dashboard extends BaseDashboard
     {
         $this->view->setData([
             'pageTitle' => 'Dashboard',
+            'withDatatables' => true,
         ]);
         if (auth()->user()->inGroup('user')) {
             return $this->view->render('pages/panel/dashboard-user');
@@ -28,6 +30,7 @@ class Dashboard extends BaseDashboard
             'page' => 'manajemen-kamar',
             'pageTitle' => 'Manajemen Kamar',
             'items' => Rooms::all(),
+            'withDatatables' => true,
         ]);
         return $this->view->render('pages/panel/kamar');
     }
@@ -37,6 +40,7 @@ class Dashboard extends BaseDashboard
             'page' => 'data-booking',
             'pageTitle' => 'Data Booking',
             'items' => Bookings::all(),
+            'withDatatables' => true,
         ]);
         if (auth()->user()->inGroup('user')) {
             return $this->view->render('pages/panel/booking-user');
@@ -51,6 +55,7 @@ class Dashboard extends BaseDashboard
             'page' => 'data-pasien',
             'pageTitle' => 'Data Pasien',
             'items' => Bookings::all(),
+            'withDatatables' => true,
         ]);
         return $this->view->render('pages/panel/pasien');
     }
@@ -62,6 +67,7 @@ class Dashboard extends BaseDashboard
             'pageTitle' => 'Master Data',
             'user' => PenggunaModel::find(auth()->user()->id),
             'pasien' => Pasien::where('user_id',auth()->user()->id)->get()->first(),
+            'withDatatables' => true,
         ]);
         return $this->view->render('pages/panel/master');
     }
@@ -71,6 +77,7 @@ class Dashboard extends BaseDashboard
             'page' => 'laporan-booking',
             'pageTitle' => 'Laporan',
             'items' => Bookings::all(),
+            'withDatatables' => false,
         ]);
         return $this->view->render('pages/panel/laporan');
     }
@@ -80,6 +87,7 @@ class Dashboard extends BaseDashboard
         $this->view->setData([
             'page' => 'cetak-invoice',
             'pageTitle' => 'Cetak Invoice Booking',
+            'withDatatables' => true,
         ]);
         return $this->view->render('pages/panel/cetak');
     }
@@ -92,7 +100,22 @@ class Dashboard extends BaseDashboard
         }
         $this->view->setData([
             'invoice' => $data,
+            'isDownload' => false,
         ]);
+        return $this->view->render('pages/panel/invoice');
+    }
+
+    public function download(int $id)
+    {
+        $data = Bookings::where('id', $id)->where('status', 1)->get()->first();
+        if (!$data) {
+            return redirect()->to(base_url());
+        }
+        $this->view->setData([
+            'invoice' => $data,
+            'isDownload' => true,
+        ]);
+        
         return $this->view->render('pages/panel/invoice');
     }
 }

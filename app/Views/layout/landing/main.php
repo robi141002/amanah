@@ -17,7 +17,8 @@
 
 <body>
     <div class="parent-wrapper">
-        <div class="header-wrapper">
+        <div class="header-wrapper"
+        >
             <?=$this->include('layout/landing/header')?>
         </div>
         <div class="content-wrapper">

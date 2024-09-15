@@ -28,6 +28,7 @@ $routes->environment('production', static function ($routes) {
 
 $routes->group('api', static function (RouteCollection $routes) {
     $routes->resource('kamar', ['namespace' => '', 'controller' => Kamar::class, 'websafe' => 1]);
+    $routes->get('booking/booked', [Booking::class, 'booked']);
     $routes->get('booking/check', [Booking::class, 'check']);
     $routes->resource('booking', ['namespace' => '', 'controller' => Booking::class, 'websafe' => 1]);
     $routes->resource('pasien', ['namespace' => '', 'controller' => Pasien::class, 'websafe' => 1]);
@@ -44,6 +45,7 @@ $routes->group('panel', static function (RouteCollection $routes) {
 });
 
 $routes->get('invoice/(:num)', [Dashboard::class, 'invoice']);
+$routes->get('invoice/download/(:num)', [Dashboard::class, 'download']);
 
 $routes->get('webhook', [Home::class, 'webhook']);
 $routes->post('webhook', [Home::class, 'webhook']);
