@@ -68,14 +68,19 @@ class Booking extends BaseApi
                 'mime_in[pasfoto,image/png,image/jpg,image/gif]',
                 'ext_in[image,png,jpg,gif]',
             ],
+            'pendamping_ktp' => [
+                'mime_in[pendamping_ktp,image/png,image/jpg,image/gif]',
+                'ext_in[image,png,jpg,gif]',
+            ],
+            'pendamping_pasfoto' => [
+                'mime_in[pendamping_pasfoto,image/png,image/jpg,image/gif]',
+                'ext_in[image,png,jpg,gif]',
+            ],
         ]);
 
         $user = PenggunaModel::find(auth()->user()->id);
         $pasien = Pasien::where('user_id', auth()->user()->id)->get()->first();
         $data->pasien_id = $pasien->id;
-        $data->name = $user->nama;
-        $data->address = $pasien->address;
-        $data->phone = $pasien->phone;
     }
 
     public function afterCreate(&$data)
@@ -87,6 +92,8 @@ class Booking extends BaseApi
             "bpjs" => $this->request->getFile('bpjs'),
             "pasfoto" => $this->request->getFile('pasfoto'),
             "sktm" => $this->request->getFile('sktm'),
+            "pendamping_ktp" => $this->request->getFile('pendamping_ktp'),
+            "pendamping_pasfoto" => $this->request->getFile('pendamping_pasfoto'),
         ];
         foreach ($files as $idx => $file) {
             /** @var \CodeIgniter\HTTP\Files\UploadedFile $file */

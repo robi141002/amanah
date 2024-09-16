@@ -140,8 +140,55 @@ $this->extend('layout/panel/main');
                                 <input type="hidden" name="room_id">
                                 <div class="room-selector">
                                 </div>
+                                <hr>
+                                <div class="center"><small>Data Pasien</small></div>
+                                <hr>
                                 <div class="row">
-                                    <div class="file-field input-field col s12">
+                                    <div class="input-field col s6">
+                                        <input placeholder="Masukkan Nama Pasien" id="name" name="name" type="text"
+                                            class="validate" required>
+                                        <label for="name">Nama Pasien</label>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input placeholder="Masukkan Nomor HP Pasien" id="phone" name="phone" type="tel"
+                                            class="validate" required>
+                                        <label for="phone">Nomor HP Pasien</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <select name="jenis_kelamin">
+                                            <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                                            <option value="Laki-laki">Laki-laki</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                        </select>
+                                        <label for="jenis_kelamin">Jenis Kelamin</label>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input placeholder="Masukkan Tanggal Lahir Pasien" id="birthdate"
+                                            name="birthdate" type="text" class="validate datepicker" required>
+                                        <label for="birthdate">Tanggal Lahir Pasien</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <select name="kriteria">
+                                            <option value="" disabled selected>Pilih Kriteria Pasien</option>
+                                            <option value="Anak-anak">Anak-anak</option>
+                                            <option value="Dewasa">Dewasa</option>
+                                        </select>
+                                        <label for="kriteria">Kriteria Pasien</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea id="address" name="address" class="materialize-textarea"
+                                            required></textarea>
+                                        <label for="address">Alamat Pasien</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="file-field input-field col s6">
                                         <div class="btn">
                                             <span>File</span>
                                             <input type="file" accept="image/png, image/gif, image/jpeg" name="kk"
@@ -152,9 +199,7 @@ $this->extend('layout/panel/main');
                                                 placeholder="Foto Kartu Keluarga Pasien">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="file-field input-field col s12">
+                                    <div class="file-field input-field col s6">
                                         <div class="btn">
                                             <span>File</span>
                                             <input type="file" accept="image/png, image/gif, image/jpeg" name="ktp"
@@ -166,7 +211,7 @@ $this->extend('layout/panel/main');
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="file-field input-field col s12">
+                                    <div class="file-field input-field col s6">
                                         <div class="btn">
                                             <span>File</span>
                                             <input type="file" accept="image/png, image/gif, image/jpeg" name="rujukan"
@@ -177,9 +222,7 @@ $this->extend('layout/panel/main');
                                                 placeholder="Foto Surat Rujukan RS/Dokter">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="file-field input-field col s12">
+                                    <div class="file-field input-field col s6">
                                         <div class="btn">
                                             <span>File</span>
                                             <input type="file" accept="image/png, image/gif, image/jpeg" name="bpjs"
@@ -192,7 +235,7 @@ $this->extend('layout/panel/main');
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="file-field input-field col s12">
+                                    <div class="file-field input-field col s6">
                                         <div class="btn">
                                             <span>File</span>
                                             <input type="file" accept="image/png, image/gif, image/jpeg" name="pasfoto"
@@ -203,9 +246,7 @@ $this->extend('layout/panel/main');
                                                 placeholder="Foto Terbaru Pasien">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="file-field input-field col s12">
+                                    <div class="file-field input-field col s6">
                                         <div class="btn">
                                             <span>File</span>
                                             <input type="file" accept="image/png, image/gif, image/jpeg" name="sktm">
@@ -213,6 +254,52 @@ $this->extend('layout/panel/main');
                                         <div class="file-path-wrapper">
                                             <input class="file-path validate" type="text"
                                                 placeholder="Foto SKTM (bila ada)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="center"><small>Data Pendamping</small></div>
+                                <hr>
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <input placeholder="Masukkan Nama Pendamping" id="pendamping_name"
+                                            name="pendamping_name" type="text" class="validate" required>
+                                        <label for="pendamping_name">Nama Pendamping</label>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input placeholder="Masukkan Nomor HP Pendamping" id="pendamping_phone"
+                                            name="pendamping_phone" type="tel" class="validate" required>
+                                        <label for="pendamping_phone">Nomor HP Pendamping</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea id="pendamping_address" name="pendamping_address"
+                                            class="materialize-textarea"></textarea>
+                                        <label for="pendamping_address">Alamat Pendamping (Opsional)</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="file-field input-field col s6">
+                                        <div class="btn">
+                                            <span>File</span>
+                                            <input type="file" accept="image/png, image/gif, image/jpeg"
+                                                name="pendamping_ktp" required>
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text"
+                                                placeholder="Foto KTP Pendamping">
+                                        </div>
+                                    </div>
+                                    <div class="file-field input-field col s6">
+                                        <div class="btn">
+                                            <span>File</span>
+                                            <input type="file" accept="image/png, image/gif, image/jpeg"
+                                                name="pendamping_pasfoto" required>
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text"
+                                                placeholder="Foto Terbaru Pendamping">
                                         </div>
                                     </div>
                                 </div>

@@ -44,19 +44,20 @@ const table = {
       {
         data: "id",
         render: function (data, type, row) {
+          const btnInfo = `<a href="#modal-info" class="btn-control btn-info purple darken-2 modal-trigger" data-title="Info" data-id="${data}"><i class="material-icons">info</i></a>`;
           const btnCek = `<a href="${row.ktp}" data-lightbox="file-${row.code}" class="btn-control btn-check blue darken-1" data-title="Cek data" data-id="${data}"><i class="material-icons">folder_open</i></a>`;
           const btnConfirm = `<a href="#!" class="btn-control btn-confirm green darken-2" data-title="Konfirmasi" data-id="${data}"><i class="material-icons">done</i></a>`;
           let images = ``;
-          $.each(["kk", "rujukan", "bpjs", "pasfoto", "sktm"], function (i, k) {
+          $.each(["kk", "rujukan", "bpjs", "pasfoto", "sktm", "pendamping_ktp", "pendamping_pasfoto"], function (i, k) {
             if (row[k] != null) {
               images += `<a class="hide" href="${row[k]}" data-lightbox="file-${row.code}" data-title="${k}"</a>`;
             }
           });
           switch (row.status) {
             case 0:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}${btnConfirm}<a href="#!" class="btn-control btn-tolak orange darken-2" data-title="Tolak" data-id="${data}"><i class="material-icons">cancel</i></a></div>`;
+              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${btnInfo}${images}${btnConfirm}<a href="#!" class="btn-control btn-tolak orange darken-2" data-title="Tolak" data-id="${data}"><i class="material-icons">cancel</i></a></div>`;
             default:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${images}</div>`;
+              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${btnInfo}${images}</div>`;
           }
         },
       },
@@ -135,14 +136,27 @@ $("body").on("click", ".btn-tolak", function (e) {
   });
 });
 
+$("body").on("click", ".btn-info", function (e) {
+  e.preventDefault();
+  const id = $(this).data("id");
+  const data = cloud.get("booking").find((b) => b.id == id);
+  $.each(data, function (k, v) { 
+     $(`#form-info [name=${k}]`).val(v);
+  });
+  $('select').formSelect();
+  M.textareaAutoResize($('textarea'));
+  M.updateTextFields();
+});
+
 $(document).ready(async function () {
-  await cloud.add(baseUrl + "api/kamar", {
+  cloud.add(baseUrl + "api/kamar", {
     name: "kamar",
   });
-  await cloud.add(baseUrl + "api/booking", {
+  cloud.add(baseUrl + "api/booking", {
     name: "booking",
   });
   cloud.addCallback("booking", function () {
     table.booking.ajax.reload();
   });
+  $(".modal").modal();
 });

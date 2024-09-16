@@ -134,6 +134,40 @@ $("body").on("submit", "#form-booking", function (e) {
   });
 });
 
+$("body").on("click", ".btn-cancel", function (e) {
+  e.preventDefault();
+  const id = $(this).data("id");
+  Swal.fire({
+    title: "Apakah anda yakin?",
+    text: "Booking yang di batalkan tidak dapat dikembalikan!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Batalkan",
+    cancelButtonText: "Tutup",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: baseUrl + "api/booking/" + id,
+        type: "DELETE",
+        success: function (res) {
+          $.each(res.messages, function (i, t) {
+            Toast.fire({
+              icon: i,
+              title: t,
+            });
+          });
+          cloud.pull("booking");
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
+    }
+  });
+});
+
 $(document).ready(async function () {
   cloud
     .add(baseUrl + "api/kamar", {
@@ -224,5 +258,8 @@ $(document).ready(async function () {
         });
       }, 1000);
     });
+  });
+  $(".datepicker").datepicker({
+    format: "yyyy-mm-dd",
   });
 });

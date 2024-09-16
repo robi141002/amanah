@@ -40,7 +40,7 @@ class Init extends Migration
             $table->date('date_out');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->date('birthdate');
-            $table->string('kriteria', 64);
+            $table->enum('kriteria', ["Anak-anak", "Dewasa"]);
             $table->text('kk');
             $table->text('ktp');
             $table->text('pasfoto');
@@ -48,7 +48,7 @@ class Init extends Migration
             $table->text('bpjs');
             $table->text('sktm')->nullable();
             $table->string('pendamping_name', 64);
-            $table->text('pendamping_address');
+            $table->text('pendamping_address')->nullable();
             $table->string('pendamping_phone', 64);
             $table->text('pendamping_ktp');
             $table->text('pendamping_pasfoto');
