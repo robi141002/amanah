@@ -160,7 +160,9 @@ Telah tersimpan, harap menunggu konfirmasi dari admin",
 - Nomor Whatsapp Pendamping : " . $data->pendamping_phone . "
 - Alamat Pendamping : " . $data->pendamping_address . "
 
-Telah berhasil di konfirmasi, silahkan tunjukkan bukti booking atau invoice yang dapat diunduh pada laman " . base_url("invoice/download/$data->id"),
+silahkan unduh booking invoice pada link dibawah kemudian cetak 1 lembar dan tunjukan pada admin saat datang ke Rumah Singgah Amanah.
+
+" . base_url("invoice/download/$data->id"),
                             'sandbox' => 'false',
                         ],
                     ]);
