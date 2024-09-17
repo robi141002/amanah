@@ -37,7 +37,7 @@ class Booking extends BaseApi
         }
 
         $data = $data->values()->all();
-        
+
         return $this->request->getVar('wrap') ? $this->respond([$this->request->getVar('wrap') => $data]) : $this->respond($data);
     }
 
@@ -104,6 +104,98 @@ class Booking extends BaseApi
             }
         }
         $data->save();
+
+        $client = \Config\Services::curlrequest();
+        $response = $client->request('POST', 'https://app.saungwa.com/api/create-message', [
+            'form_params' => [
+                'appkey' => env('WA_APPKEY'),
+                'authkey' => env('WA_AUTHKEY'),
+                'to' => $data->pasien->phone,
+                'message' => "Booking anda telah berhasil dibuat dengan detail sebagai berikut :
+
+- Nama Pasien : " . $data->name . "
+- Alamat Pasien : " . $data->address . "
+- Nomor Whatsapp : " . $data->phone . "
+- Jenis Kelamin : " . $data->jenis_kelamin . "
+- Tanggal Lahir : " . $data->birthdate . "
+- Kriteria : " . $data->kriteria . "
+- Tanggal Masuk : " . $data->date_in . "
+- Tanggal Keluar : " . $data->date_out . "
+- Kamar : " . $data->kamar->name . "
+- Nama Pendamping : " . $data->pendamping_name . "
+- Nomor Whatsapp Pendamping : " . $data->pendamping_phone . "
+- Alamat Pendamping : " . $data->pendamping_address . "
+
+
+Telah tersimpan, harap menunggu konfirmasi dari admin",
+                'sandbox' => 'false',
+            ],
+        ]);
+    }
+
+    public function afterUpdate(&$data)
+    {
+        if ($this->request->getVar('status')) {
+            $client = \Config\Services::curlrequest();
+            switch ((int) $this->request->getVar('status')) {
+                case 1:
+                    $response = $client->request('POST', 'https://app.saungwa.com/api/create-message', [
+                        'form_params' => [
+                            'appkey' => env('WA_APPKEY'),
+                            'authkey' => env('WA_AUTHKEY'),
+                            'to' => $data->pasien->phone,
+                            'message' => "Booking anda dengan detail sebagai berikut :
+
+- Kode Invoice : " . $data->code . "
+- Nama Pasien : " . $data->name . "
+- Alamat Pasien : " . $data->address . "
+- Nomor Whatsapp : " . $data->phone . "
+- Jenis Kelamin : " . $data->jenis_kelamin . "
+- Tanggal Lahir : " . $data->birthdate . "
+- Kriteria : " . $data->kriteria . "
+- Tanggal Masuk : " . $data->date_in . "
+- Tanggal Keluar : " . $data->date_out . "
+- Kamar : " . $data->kamar->name . "
+- Nama Pendamping : " . $data->pendamping_name . "
+- Nomor Whatsapp Pendamping : " . $data->pendamping_phone . "
+- Alamat Pendamping : " . $data->pendamping_address . "
+
+Telah berhasil di konfirmasi, silahkan tunjukkan bukti booking atau invoice yang dapat diunduh pada laman " . base_url("invoice/download/$data->id"),
+                            'sandbox' => 'false',
+                        ],
+                    ]);
+                    break;
+                case 11:
+                    $response = $client->request('POST', 'https://app.saungwa.com/api/create-message', [
+                        'form_params' => [
+                            'appkey' => env('WA_APPKEY'),
+                            'authkey' => env('WA_AUTHKEY'),
+                            'to' => $data->pasien->phone,
+                            'message' => "Booking anda dengan detail sebagai berikut :
+
+- Nama Pasien : " . $data->name . "
+- Alamat Pasien : " . $data->address . "
+- Nomor Whatsapp : " . $data->phone . "
+- Jenis Kelamin : " . $data->jenis_kelamin . "
+- Tanggal Lahir : " . $data->birthdate . "
+- Kriteria : " . $data->kriteria . "
+- Tanggal Masuk : " . $data->date_in . "
+- Tanggal Keluar : " . $data->date_out . "
+- Kamar : " . $data->kamar->name . "
+- Nama Pendamping : " . $data->pendamping_name . "
+- Nomor Whatsapp Pendamping : " . $data->pendamping_phone . "
+- Alamat Pendamping : " . $data->pendamping_address . "
+
+Di tolak oleh admin dengan keterangan :
+$data->keterangan
+
+silahkan coba kembali dan periksa kembali informasi anda dan informasi kamar yang tersedia.",
+                            'sandbox' => 'false',
+                        ],
+                    ]);
+                    break;
+            }
+        }
     }
 
     public function check()
@@ -117,10 +209,10 @@ class Booking extends BaseApi
     {
         $data = DataModel::where("status", "=", 1)->get();
         $today = Carbon::today("Asia/Jakarta");
-        $data = $data->filter(function ($q) use($today) {
+        $data = $data->filter(function ($q) use ($today) {
             $date_in = Carbon::createFromFormat("Y-m-d", $q->date_in);
             $date_out = Carbon::createFromFormat("Y-m-d", $q->date_out);
-            return  $today->isBetween($date_in,  $date_out);
+            return $today->isBetween($date_in, $date_out);
         });
         return $this->respond($data);
     }

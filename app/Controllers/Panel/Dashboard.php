@@ -116,6 +116,12 @@ class Dashboard extends BaseDashboard
             'isDownload' => true,
         ]);
         
-        return $this->view->render('pages/panel/invoice');
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($this->view->render('pages/panel/invoice'));
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        ob_clean();
+        $dompdf->stream('invoice_'. $data->code .'.pdf', array("Attachment" => false));
+        
     }
 }

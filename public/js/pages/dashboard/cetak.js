@@ -43,7 +43,7 @@ const table = {
         render: function (data, type, row) {
           switch (row.status) {
             case 1:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;"><a href="${origin}/invoice/${data}" class="btn blue" target="_blank">Cetak</a><a class="btn-pdf btn blue">Unduh</a></div>`;
+              return `<div class="center" style="display: flex; gap: 5px; color: white;"><a href="${origin}/invoice/${data}" class="btn blue" target="_blank">Cetak</a><a href="${origin}/invoice/download/${data}" class="btn-pdf btn blue" download>Unduh</a></div>`;
             default:
               return `-`;
           }
@@ -52,15 +52,6 @@ const table = {
     ],
   }),
 };
-
-$("body").on("click", ".btn-pdf", function (e) {
-  e.preventDefault();
-  const data = table.booking.row($(this).closest("tr")).data();
-  document.getElementById("invoice").src = origin + "/invoice/download/" + data.id;
-  setTimeout(() => {
-    html2pdf().from(document.getElementById("invoice").contentWindow.document.body).save(`invoice_${data.code}.pdf`);
-  }, 1000);
-});
 
 const localeEn = {
   days: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"],

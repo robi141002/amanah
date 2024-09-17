@@ -93,99 +93,10 @@ $this->extend('layout/landing/main');
                 </div>
             </div>
             <div class="part form-ready hide">
-                <h3 class="center"><b>FORM PENDAFTARAN PASIEN</b></h3>
-                <p class="center date-ready"><em>Silahkan lengkapi form di bawah ini</em></p>
+                <h3 class="center"><b>CEK KETERSEDIAAN KAMAR</b></h3>
                 <div class="container">
                     <input type="hidden" name="room_id">
                     <div class="room-selector">
-                    </div>
-                    <div class="row">
-                        <div class="input-field col m6 s12">
-                            <input id="name" name="name" type="text" class="validate" required>
-                            <label for="name">Nama Lengkap</label>
-                        </div>
-                        <div class="input-field col m6 s12">
-                            <input id="phone" name="phone" type="tel" class="validate" required>
-                            <label for="phone">Nomor Telepon</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <textarea id="address" name="address" class="materialize-textarea" required></textarea>
-                            <label for="address">Alamat</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="file-field input-field col s12">
-                            <div class="btn">
-                                <span>File</span>
-                                <input type="file" accept="image/png, image/gif, image/jpeg" name="kk" required>
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Foto Kartu Keluarga Pasien">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="file-field input-field col s12">
-                            <div class="btn">
-                                <span>File</span>
-                                <input type="file" accept="image/png, image/gif, image/jpeg" name="ktp" required>
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Foto KTP Pasien">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="file-field input-field col s12">
-                            <div class="btn">
-                                <span>File</span>
-                                <input type="file" accept="image/png, image/gif, image/jpeg" name="rujukan" required>
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text"
-                                    placeholder="Foto Surat Rujukan RS/Dokter">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="file-field input-field col s12">
-                            <div class="btn">
-                                <span>File</span>
-                                <input type="file" accept="image/png, image/gif, image/jpeg" name="bpjs" required>
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Foto BPJS kelas 3">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="file-field input-field col s12">
-                            <div class="btn">
-                                <span>File</span>
-                                <input type="file" accept="image/png, image/gif, image/jpeg" name="pasfoto" required>
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Foto Terbaru Pasien">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="file-field input-field col s12">
-                            <div class="btn">
-                                <span>File</span>
-                                <input type="file" accept="image/png, image/gif, image/jpeg" name="sktm">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Foto SKTM (bila ada)">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12 center">
-                            <button type="submit" class="btn waves-effect waves-light green darken-2">Kirim</button>
-                        </div>
                     </div>
                 </div>
             </div>

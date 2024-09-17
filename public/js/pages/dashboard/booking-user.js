@@ -93,6 +93,7 @@ $("body").on("click", ".room", function (e) {
 });
 $("body").on("submit", "#form-booking", function (e) {
   e.preventDefault();
+  $(this).closest("button[type=submit]").prop("disabled", true);
   if ($(this).find("input[name=room_id]").val() == "") {
     Toast.fire({
       icon: "error",
@@ -130,6 +131,9 @@ $("body").on("submit", "#form-booking", function (e) {
     },
     error: function (err) {
       console.log(err);
+    },
+    complete: () => {
+      $(this).closest("button[type=submit]").prop("disabled", true);
     },
   });
 });

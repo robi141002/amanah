@@ -43,6 +43,11 @@ class Bookings extends Model
         return $this->hasOne(Rooms::class, 'id', 'room_id');
     }
 
+    public function pasien(): HasOne
+    {
+        return $this->hasOne(Pasien::class, 'id', 'pasien_id');
+    }
+
     /**
      * The "booted" method of the model.
      */
