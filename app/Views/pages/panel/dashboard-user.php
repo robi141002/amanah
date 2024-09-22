@@ -23,7 +23,7 @@ $this->extend('layout/panel/main');
             </div>
             <div class="panel-card overview white-text purple darken-3">
                 <span>Sudah siap untuk melakukan pemesanan ruangan ?</span>
-                <a href="<?=base_url('panel/booking')?>" class="btn waves-effect waves-light white-text purple darken-4">Booking Sekarang</a>
+                <a href="<?=base_url('panel/booking')?>?booking=true" class="btn waves-effect waves-light white-text purple darken-4">Booking Sekarang</a>
             </div>
         </div>
     </div>

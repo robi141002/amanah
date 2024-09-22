@@ -62,7 +62,7 @@ class InitSeeder extends Seeder
             [
                 'user_id' => 4,
                 'address' => 'Jl. Jalan',
-                'phone' => '081234567890',
+                'phone' => '+6285225230702',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -77,7 +77,7 @@ class InitSeeder extends Seeder
                 'date_out' => Carbon::now(),
                 'name' => 'John Doe',
                 'address' => 'Jl. Jalan',
-                'phone' => '081234567890',
+                'phone' => '+6285225230702',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],

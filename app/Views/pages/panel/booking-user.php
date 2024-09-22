@@ -12,12 +12,12 @@ $this->extend('layout/panel/main');
             <div class="page-slider-header">
                 <div class="page-slider-title">
                     <h4>Data Booking</h4>
-                    <div style="display: flex; gap: 5px;">
-                        <a href="#!" class="btn-header-slider btn-slider green" data-title="Booking" data-target="form">
-                            <i class="material-icons">add</i>
-                        </a>
-                    </div>
                 </div>
+            </div>
+            <div class="center" style="display: flex; gap: 5px;">
+                <a href="#!" class="btn-header-slider uncollapse btn-slider green" data-target="form" style="font-size: 1.5rem; height: 3remx;">
+                    <i class="material-icons" style="font-size: 1.5rem;">add</i> Booking
+                </a>
             </div>
             <div class="page-slider-body">
                 <table class="highlight responsive-table" id="kamar" style="width: 100%;">
@@ -34,7 +34,7 @@ $this->extend('layout/panel/main');
                 </table>
             </div>
         </div>
-        <div class="page-slider" data-slider="form">
+        <div class="page-slider<?= $booking ? " active" : "" ?>" data-slider="form">
             <div class="page-slider-header">
                 <div class="page-slider-title">
                     <div style="display: flex; gap: 5px;">

@@ -11,6 +11,7 @@
     },
     "require": {
         "php": "^7.4 || ^8.0",
+        "brick/phonenumber": "^0.6.0",
         "codeigniter4/framework": "^4.0",
         "codeigniter4/shield": "^1.0",
         "dompdf/dompdf": "^3.0",

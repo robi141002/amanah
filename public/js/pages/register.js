@@ -22,6 +22,14 @@ $("body").on("submit", "#form-register", function (e) {
         });
       });
     },
+    error: (err) => {
+      $.each(err.responseJSON.messages, function (i, message) { 
+        Toast.fire({
+          icon: "error",
+          title: message,
+        });
+      });
+    },
     complete: () => {
       $(this).find("button[type=submit]").prop("disabled", false);
     },

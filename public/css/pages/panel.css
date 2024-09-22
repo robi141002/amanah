@@ -266,9 +266,13 @@ body.panel-nav-active .panel-nav-wrapper::before {
   border-radius: 2rem;
   transition: all 0.3s ease;
 }
+.btn-header-slider.uncollapse {
+  width: 10rem; 
+  gap: 0.5rem;
+}
 .btn-header-slider:hover {
   gap: 0.5rem;
-  width: 10rem;
+  width: 10rem; 
 }
 .btn-header-slider:active {
   transform: scale(0.9);

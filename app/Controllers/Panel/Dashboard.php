@@ -7,6 +7,9 @@ use App\Models\Bookings;
 use App\Models\Pasien;
 use App\Models\PenggunaModel;
 use App\Models\Rooms;
+use Brick\PhoneNumber\PhoneNumber;
+use Brick\PhoneNumber\PhoneNumberFormat;
+use Brick\PhoneNumber\PhoneNumberParseException;
 use Dompdf\Dompdf;
 
 class Dashboard extends BaseDashboard
@@ -41,6 +44,7 @@ class Dashboard extends BaseDashboard
             'pageTitle' => 'Data Booking',
             'items' => Bookings::all(),
             'withDatatables' => true,
+            "booking" => $this->request->getVar("booking"),
         ]);
         if (auth()->user()->inGroup('user')) {
             return $this->view->render('pages/panel/booking-user');
