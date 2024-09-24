@@ -61,6 +61,8 @@ $(document).ready(async function () {
           name: "booked",
         })
         .then((booked) => {
+          console.log(kamar.length, booked.length);
+          
           $("#count-avail")
             .text(kamar.length - booked.length)
             .counterUp({

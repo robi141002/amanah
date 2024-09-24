@@ -41,8 +41,7 @@ $this->extend('layout/panel/main');
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="phone" name="phone" type="text" class="validate" value="<?=$pasien->phone?>"
-                                    disabled>
+                                <input id="phone" name="phone" type="text" class="validate" value="<?=$pasien->phone?>">
                                 <label for="phone">
                                     Nomor Whatsapp
                                 </label>

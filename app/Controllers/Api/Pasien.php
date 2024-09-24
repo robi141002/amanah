@@ -86,6 +86,10 @@ Silahkan login dengan username dan password tersebut.
                 'nama' => $this->request->getVar('nama'),
             ]);
         }
+        if ($this->request->getVar('phone')) {
+            $number = PhoneNumber::parse($this->request->getVar('phone'), "ID");
+            $data->phone = $number->format(PhoneNumberFormat::E164);
+        }
         $users->save($user);
     }
 }

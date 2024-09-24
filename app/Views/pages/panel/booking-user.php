@@ -52,11 +52,13 @@ $this->extend('layout/panel/main');
                             <h3 class="center"><b>Pilih Tanggal Terlebih Dahulu</b></h3>
                             <div class="container">
                                 <div class="row">
-                                    <div class="col s6">
+                                    <div class="input-field col s6">
                                         <input type="text" id="date-in" name="date_in">
+                                        <label for="date-in">Tanggal Masuk</label>
                                     </div>
-                                    <div class="col s6">
+                                    <div class="input-field col s6">
                                         <input type="text" id="date-out" name="date_out">
+                                        <label for="date-out">Tanggal Keluar</label>
                                     </div>
                                 </div>
                                 <div class="row">

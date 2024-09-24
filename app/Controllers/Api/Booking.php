@@ -216,6 +216,7 @@ silahkan coba kembali dan periksa kembali informasi anda dan informasi kamar yan
             $date_out = Carbon::createFromFormat("Y-m-d", $q->date_out);
             return $today->isBetween($date_in, $date_out);
         });
+        $data = $data->values();
         return $this->respond($data);
     }
 }

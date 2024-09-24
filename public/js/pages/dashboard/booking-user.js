@@ -208,6 +208,7 @@ $(document).ready(async function () {
       dateOut.update({
         minDate: date,
       });
+      M.updateTextFields();
     },
   });
   dateOut = new AirDatepicker("#date-out", {
@@ -218,6 +219,7 @@ $(document).ready(async function () {
       dateIn.update({
         maxDate: date,
       });
+      M.updateTextFields();
     },
   });
 
