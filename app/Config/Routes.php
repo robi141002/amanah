@@ -32,6 +32,7 @@ $routes->group('api', static function (RouteCollection $routes) {
     $routes->get('booking/check', [Booking::class, 'check']);
     $routes->resource('booking', ['namespace' => '', 'controller' => Booking::class, 'websafe' => 1]);
     $routes->resource('pasien', ['namespace' => '', 'controller' => Pasien::class, 'websafe' => 1]);
+    $routes->post('adminwa', [Home::class, 'adminwa']);
 });
 
 $routes->group('panel', static function (RouteCollection $routes) {

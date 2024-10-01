@@ -28,6 +28,7 @@ $this->extend('layout/panel/main');
                         <tr>
                             <th>Nama Kamar</th>
                             <th>Deskripsi</th>
+                            <th>Status Kamar</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>

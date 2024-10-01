@@ -19,6 +19,21 @@ const table = {
       {
         data: "id",
         render: function (data, type, row) {
+          return `
+  <div class="switch">
+    <label>
+      Non-aktif
+      <input class="status-kamar" type="checkbox" data-id="${data}"${row.status ? " checked" : ""}>
+      <span class="lever"></span>
+      Aktif
+    </label>
+  </div>
+          `;
+        },
+      },
+      {
+        data: "id",
+        render: function (data, type, row) {
           return `<div style="display: flex; gap: 5px; color: white;">
               <a href="#!" class="btn-control btn-slider btn-edit orange darken-1" data-title="Edit" data-target="form" data-id="${data}">
                   <i class="material-icons">edit</i>
@@ -105,6 +120,21 @@ $("body").on("submit", "#form-kamar", function (e) {
       cloud.pull("kamar");
       $(this).closest(".page-slider").removeClass("active");
     },
+  });
+});
+
+$("body").on("change", ".status-kamar", function (e) {
+  const id = $(this).data("id");
+  const status = $(this).is(":checked");
+  $.ajax({
+    type: "POST",
+    url: origin + "/api/kamar/" + id,
+    data: {
+      status: status ? 1 : 0,
+    },
+    success: function (res) {
+      console.log(res);
+    }
   });
 });
 

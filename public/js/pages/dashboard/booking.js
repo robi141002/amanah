@@ -34,6 +34,8 @@ const table = {
           switch (data) {
             case 11:
               return "Ditolak";
+            case 12:
+              return "Direvisi sampai " + moment(row.revisied_at).format("YYYY-MM-DD HH:mm:ss");
             case 1:
               return "Dikonfirmasi";
             default:
@@ -55,7 +57,7 @@ const table = {
           });
           switch (row.status) {
             case 0:
-              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${btnInfo}${images}${btnConfirm}<a href="#!" class="btn-control btn-tolak orange darken-2" data-title="Tolak" data-id="${data}"><i class="material-icons">cancel</i></a></div>`;
+              return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${btnInfo}${images}${btnConfirm}<a href="#!" class="btn-control btn-revisi blue darken-2" data-title="Revisi" data-id="${data}"><i class="material-icons">autorenew</i></a><a href="#!" class="btn-control btn-tolak orange darken-2" data-title="Tolak" data-id="${data}"><i class="material-icons">cancel</i></a></div>`;
             default:
               return `<div class="center" style="display: flex; gap: 5px; color: white;">${btnCek}${btnInfo}${images}</div>`;
           }
@@ -83,6 +85,44 @@ $("body").on("click", ".btn-confirm", function (e) {
         dataType: "json",
         data: {
           status: 1,
+        },
+        success: (res) => {
+          $.each(res.messages, function (i, t) {
+            Toast.fire({
+              icon: "success",
+              title: "Data berhasil di simpan",
+            });
+          });
+          cloud.pull("booking");
+        },
+      });
+    }
+  });
+});
+$("body").on("click", ".btn-revisi", function (e) {
+  const id = $(this).data("id");
+  const data = cloud.get("booking").find((e) => e.id == id);
+  Swal.fire({
+    title: "Berikan keterangan revisi",
+    input: "textarea",
+    inputLabel: "Keterangan",
+    inputValidator: (value) => {
+      if (!value) {
+        return "Keterangan tidak boleh kosong!";
+      }
+    },
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "POST",
+        url: baseUrl + "api/booking/" + id,
+        dataType: "json",
+        data: {
+          status: 12,
+          keterangan: result.value,
         },
         success: (res) => {
           $.each(res.messages, function (i, t) {

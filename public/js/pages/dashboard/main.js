@@ -198,6 +198,52 @@ $("body").on("click", ".btn-logout", function (e) {
   });
 });
 
+$("body").on("click", ".btn-number", function (e) {
+  e.preventDefault();
+  Swal.fire({
+    title: "Ubah Nomor Whatsapp",
+    input: "tel",
+    padding: "3rem",
+    inputLabel: "Nomor Whatsapp",
+    inputValidator: (value) => {
+      if (!value) {
+        return "Nomor tidak boleh kosong!";
+      }
+      if (!/^[0-9+]+$/.test(value)) {
+        return "Nomor harus berupa angka!";
+      }
+      if (value.length < 10) {
+        return "Nomor harus diisi minimal 10 digit!";
+      }
+      if (value.length > 14) {
+        return "Nomor harus diisi maksimal 13 digit!";
+      }
+    },
+    showCancelButton: true,
+    confirmButtonText: "Simpan",
+    showLoaderOnConfirm: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "POST",
+        url: baseUrl + "api/adminwa",
+        data: {
+          phone: result.value,
+        },
+        success: (res) => {
+          if (res.success) {
+            Toast.fire({
+              icon: "success",
+              title: "Data berhasil di simpan",
+            });
+            $(".btn-number").text(res.phone);
+          }
+        },
+      });
+    }
+  });
+});
+
 $(document).ready(function () {
   $(`.nav-item-link[data-page=${page}]`).addClass("active");
 });

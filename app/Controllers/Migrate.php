@@ -79,6 +79,10 @@ class Migrate extends BaseController
             $user = $users->findById($users->getInsertID());
             $user->addGroup('user');
 
+            service('settings')->set('App.adminNumber', '+6285225230702');
+
+            file_put_contents(ROOTPATH . '/tasks.json', json_encode([]));
+
         } catch (Throwable $e) {
             throw new Exception($e->getMessage());
         }

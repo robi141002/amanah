@@ -36,6 +36,13 @@ class Bookings extends Model
         'pendamping_pasfoto',
         'status',
         'keterangan',
+        'revisied_at',
+    ];
+
+    protected $casts = [
+        'revisied_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function kamar(): HasOne

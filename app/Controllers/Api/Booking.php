@@ -131,6 +131,32 @@ Telah tersimpan, harap menunggu konfirmasi dari admin",
                 'sandbox' => 'false',
             ],
         ]);
+
+        $response = $client->request('POST', 'https://app.saungwa.com/api/create-message', [
+            'form_params' => [
+                'appkey' => env('WA_APPKEY'),
+                'authkey' => env('WA_AUTHKEY'),
+                'to' => service('settings')->get('App.adminNumber'),
+                'message' => "Booking dengan detail :
+
+- Kode Invoice : " . $data->code . "
+- Nama Pasien : " . $data->name . "
+- Alamat Pasien : " . $data->address . "
+- Nomor Whatsapp : " . $data->phone . "
+- Jenis Kelamin : " . $data->jenis_kelamin . "
+- Tanggal Lahir : " . $data->birthdate . "
+- Kriteria : " . $data->kriteria . "
+- Tanggal Masuk : " . $data->date_in . "
+- Tanggal Keluar : " . $data->date_out . "
+- Kamar : " . $data->kamar->name . "
+- Nama Pendamping : " . $data->pendamping_name . "
+- Nomor Whatsapp Pendamping : " . $data->pendamping_phone . "
+- Alamat Pendamping : " . $data->pendamping_address . "
+
+telah berhasil disimpan, menunggu konfirmasi dari anda.",
+                'sandbox' => 'false',
+            ],
+        ]);
     }
 
     public function afterUpdate(&$data)
@@ -192,6 +218,43 @@ Di tolak oleh admin dengan keterangan :
 $data->keterangan
 
 silahkan coba kembali dan periksa kembali informasi anda dan informasi kamar yang tersedia.",
+                            'sandbox' => 'false',
+                        ],
+                    ]);
+                    break;
+                case 12:
+                    $data->revisied_at = Carbon::now("Asia/Jakarta")->addMinutes(10);
+                    $data->save();
+
+                    $json = json_decode(file_get_contents(ROOTPATH . '/tasks.json'));
+                    $json[] = $data->id;
+
+                    file_put_contents(ROOTPATH . '/tasks.json', json_encode($json));
+
+                    $response = $client->request('POST', 'https://app.saungwa.com/api/create-message', [
+                        'form_params' => [
+                            'appkey' => env('WA_APPKEY'),
+                            'authkey' => env('WA_AUTHKEY'),
+                            'to' => $data->pasien->phone,
+                            'message' => "Booking anda dengan detail sebagai berikut :
+
+- Nama Pasien : " . $data->name . "
+- Alamat Pasien : " . $data->address . "
+- Nomor Whatsapp : " . $data->phone . "
+- Jenis Kelamin : " . $data->jenis_kelamin . "
+- Tanggal Lahir : " . $data->birthdate . "
+- Kriteria : " . $data->kriteria . "
+- Tanggal Masuk : " . $data->date_in . "
+- Tanggal Keluar : " . $data->date_out . "
+- Kamar : " . $data->kamar->name . "
+- Nama Pendamping : " . $data->pendamping_name . "
+- Nomor Whatsapp Pendamping : " . $data->pendamping_phone . "
+- Alamat Pendamping : " . $data->pendamping_address . "
+
+Perlu dilakukan revisi dengan keterangan :
+$data->keterangan
+
+silahkan periksa kembali booking anda dan revisi sebelum " . Carbon::parse($data->revisied_at)->format("d-m-Y H:i") . " Atau pesanan anda akan otomatis di batalkan.",
                             'sandbox' => 'false',
                         ],
                     ]);

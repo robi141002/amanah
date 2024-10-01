@@ -22,6 +22,7 @@ class Init extends Migration
             $table->id();
             $table->string('name', 255)->nullable();
             $table->text('desc');
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -54,6 +55,7 @@ class Init extends Migration
             $table->text('pendamping_pasfoto');
             $table->unsignedInteger('status')->default(0);
             $table->text('keterangan')->nullable();
+            $table->dateTime('revisied_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
