@@ -28,6 +28,8 @@ const table = {
           switch (data) {
             case 1:
               return "Dikonfirmasi";
+            case 12:
+              return "Menunggu Revisi";
             default:
               return "Belum dikonfirmasi";
           }
@@ -39,6 +41,8 @@ const table = {
           switch (row.status) {
             case 0:
               return `<div class="center" style="display: flex; gap: 5px; color: white;"><a href="#!" class="btn-control btn-cancel orange darken-2" data-title="Batal" data-id="${data}"><i class="material-icons">cancel</i></a></div>`;
+            case 12:
+              return `<div class="center" style="display: flex; gap: 5px; color: white;"><a href="#modal-revisi" class="btn-control btn-revisi purple darken-2 modal-trigger" data-title="Revisi" data-id="${data}"><i class="material-icons">edit</i></a></div>`;
             default:
               return `<div class="center" style="display: flex; gap: 5px; color: white;"></div>`;
           }
@@ -138,6 +142,37 @@ $("body").on("submit", "#form-booking", function (e) {
   });
 });
 
+$("body").on("submit", "#form-revisi", function (e) {
+  e.preventDefault();
+  $(this).closest("button[type=submit]").prop("disabled", true);
+  const data = new FormData(this);
+  data.append("status", 0);
+  $.ajax({
+    url: baseUrl + "api/booking/" + data.get("id"),
+    type: "POST",
+    data: data,
+    contentType: false,
+    cache: false,
+    processData: false,
+    dataType: "json",
+    success: function (res) {
+      $.each(res.messages, function (i, t) {
+        Toast.fire({
+          icon: i,
+          title: t,
+        });
+      });
+      cloud.pull("booking");
+      // close modal
+      $("#form-revisi").closest(".modal").modal("close");
+      $("#form-revisi").trigger("reset");
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
+});
+
 $("body").on("click", ".btn-cancel", function (e) {
   e.preventDefault();
   const id = $(this).data("id");
@@ -170,6 +205,22 @@ $("body").on("click", ".btn-cancel", function (e) {
       });
     }
   });
+});
+
+$("body").on("click", ".btn-revisi", function (e) {
+  e.preventDefault();
+  const id = $(this).data("id");
+  const data = cloud.get("booking").find((b) => b.id == id);
+  $.each(data, function (k, v) {
+    if (["kk", "ktp", "rujukan", "bpjs", "pasfoto", "sktm", "pendamping_ktp", "pendamping_pasfoto"].includes(k)) {
+      return;
+    }
+    $(`#form-revisi [name=${k}]`).val(v);
+  });
+  $("select").formSelect();
+  $("#keterangan-revisi").text(data.keterangan);
+  M.updateTextFields();
+  M.textareaAutoResize($("textarea"));
 });
 
 $(document).ready(async function () {
@@ -257,9 +308,14 @@ $(document).ready(async function () {
                   $(`.room[data-id=${rsvp.room_id}]`).addClass("disabled");
                 }
               );
+              $.each(
+                cloud.get("kamar").filter((v) => v.status == 0),
+                function (i, room) {
+                  $(`.room[data-id=${room.id}]`).addClass("disabled");
+                }
+              );
               $(".form-ready input[name=room_id]").val("");
             });
-            console.log(reserv);
           },
         });
       }, 1000);
@@ -268,4 +324,5 @@ $(document).ready(async function () {
   $(".datepicker").datepicker({
     format: "yyyy-mm-dd",
   });
+  $(".modal").modal();
 });

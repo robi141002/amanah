@@ -161,9 +161,36 @@ telah berhasil disimpan, menunggu konfirmasi dari anda.",
 
     public function afterUpdate(&$data)
     {
+        $files = [
+            "kk" => $this->request->getFile('kk'),
+            "ktp" => $this->request->getFile('ktp'),
+            "rujukan" => $this->request->getFile('rujukan'),
+            "bpjs" => $this->request->getFile('bpjs'),
+            "pasfoto" => $this->request->getFile('pasfoto'),
+            "sktm" => $this->request->getFile('sktm'),
+            "pendamping_ktp" => $this->request->getFile('pendamping_ktp'),
+            "pendamping_pasfoto" => $this->request->getFile('pendamping_pasfoto'),
+        ];
+        foreach ($files as $idx => $file) {
+            /** @var \CodeIgniter\HTTP\Files\UploadedFile $file */
+            if ($file && $file->isValid() && $file->isFile()) {
+                $fileName = $idx . '.' . $file->getExtension();
+                $file->move(FCPATH . "img/files/$data->id", $fileName, true);
+                $data->{$idx} = base_url("img/files/$data->id/" . $fileName);
+            }
+        }
+        $data->save();
+
         if ($this->request->getVar('status')) {
             $client = \Config\Services::curlrequest();
             switch ((int) $this->request->getVar('status')) {
+                case 0:
+                    $json = json_decode(file_get_contents(ROOTPATH . '/tasks.json'));
+                    $json = array_values(array_filter($json, function ($q) use ($data) {
+                        return $q != $data->id;
+                    }));
+
+                    file_put_contents(ROOTPATH . '/tasks.json', json_encode($json));
                 case 1:
                     $response = $client->request('POST', 'https://app.saungwa.com/api/create-message', [
                         'form_params' => [

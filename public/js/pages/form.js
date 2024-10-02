@@ -63,7 +63,7 @@ $("body").on("submit", "#form-booking", function (e) {
     processData: false,
     dataType: "json",
     success: function (reserv) {
-      $.each(reserv.messages, function (i, t) { 
+      $.each(reserv.messages, function (i, t) {
         Toast.fire({
           icon: i,
           title: t,
@@ -149,10 +149,19 @@ $(document).ready(async function () {
               $(".form-ready").fadeIn("fast").removeClass("hide");
               $(".form-ready .date-ready").text(`${reserv.q.date_in.toString().replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")} - ${reserv.q.date_out.toString().replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}`);
               $(`.room`).removeClass("active").removeClass("disabled");
-              $.each(reserv.data.filter((v) => v.status > 0), function (i, rsvp) {
-                $(`.room[data-id=${rsvp.room_id}]`).addClass("disabled");
-              });
+              $.each(
+                reserv.data.filter((v) => v.status > 0),
+                function (i, rsvp) {
+                  $(`.room[data-id=${rsvp.room_id}]`).addClass("disabled");
+                }
+              );
               $(".form-ready input[name=room_id]").val("");
+              $.each(
+                cloud.get("kamar").filter((v) => v.status == 0),
+                function (i, room) {
+                  $(`.room[data-id=${room.id}]`).addClass("disabled");
+                }
+              );
             });
             console.log(reserv);
           },
